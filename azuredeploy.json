@@ -4,11 +4,23 @@
   "parameters": {
     "buildagent_name": {
       "defaultValue": "<your agent name>",
-      "type": "String"
+      "type": "string"
     },
     "buildagent_token": {
       "defaultValue": "<your PAT token> ref: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops#permissions",
-      "type": "String"
+      "type": "string"
+    },
+    "buildagent_account": {
+      "defaultValue": "associa",
+      "type": "string"
+    },
+    "buildagent_cpu": {
+      "defaultValue": "2",
+      "type": "string"
+    },
+    "buildagent_memoryInGB": {
+      "defaultValue": "6.5",
+      "type": "string"
     }
   },
   "variables": {},
@@ -16,19 +28,19 @@
     {
       "type": "Microsoft.ContainerInstance/containerGroups",
       "apiVersion": "2018-10-01",
-      "name": "toLower([parameters('buildagent_name')])",
+      "name": "[toLower(parameters('buildagent_name'))]",
       "location": "eastus2",
       "properties": {
         "containers": [
           {
-            "name": "toLower([parameters('buildagent_name')])",
+            "name": "[toLower(parameters('buildagent_name'))]",
             "properties": {
               "image": "mcr.microsoft.com/azure-pipelines/vsts-agent",
               "ports": [],
               "environmentVariables": [
                 {
                   "name": "VSTS_ACCOUNT",
-                  "value": "associa"
+                  "value": "[parameters('buildagent_account')]"
                 },
                 {
                   "name": "VSTS_TOKEN",
@@ -41,8 +53,8 @@
               ],
               "resources": {
                 "requests": {
-                  "memoryInGB": 6.5,
-                  "cpu": 2
+                  "memoryInGB": "[parameters('buildagent_memoryInGB')]",
+                  "cpu": "[parameters('buildagent_cpu')]"
                 }
               }
             }
