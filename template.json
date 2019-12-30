@@ -2,11 +2,11 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "containerGroups_buildagent_name": {
+    "buildagent_name": {
       "defaultValue": "<your agent name>",
       "type": "String"
     },
-    "containerGroups_buildagent_token": {
+    "buildagent_token": {
       "defaultValue": "<your PAT token> ref: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops#permissions",
       "type": "String"
     }
@@ -16,12 +16,12 @@
     {
       "type": "Microsoft.ContainerInstance/containerGroups",
       "apiVersion": "2018-10-01",
-      "name": "toLower([parameters('containerGroups_buildagent_name')])",
-      "location": "westus",
+      "name": "toLower([parameters('buildagent_name')])",
+      "location": "eastus2",
       "properties": {
         "containers": [
           {
-            "name": "toLower([parameters('containerGroups_buildagent_name')])",
+            "name": "toLower([parameters('buildagent_name')])",
             "properties": {
               "image": "mcr.microsoft.com/azure-pipelines/vsts-agent",
               "ports": [],
@@ -32,11 +32,11 @@
                 },
                 {
                   "name": "VSTS_TOKEN",
-                  "value": "[parameters('containerGroups_buildagent_token')]"
+                  "value": "[parameters('buildagent_token')]"
                 },
                 {
                   "name": "VSTS_AGENT",
-                  "value": "[parameters('containerGroups_buildagent_name')]"
+                  "value": "[parameters('buildagent_name')]"
                 }
               ],
               "resources": {
