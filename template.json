@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerGroups_buildagent_name": {
+      "defaultValue": "<your agent name>",
+      "type": "String"
+    },
+    "containerGroups_buildagent_token": {
+      "defaultValue": "<your PAT token> ref: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops#permissions",
+      "type": "String"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.ContainerInstance/containerGroups",
+      "apiVersion": "2018-10-01",
+      "name": "toLower([parameters('containerGroups_buildagent_name')])",
+      "location": "westus",
+      "properties": {
+        "containers": [
+          {
+            "name": "toLower([parameters('containerGroups_buildagent_name')])",
+            "properties": {
+              "image": "mcr.microsoft.com/azure-pipelines/vsts-agent",
+              "ports": [],
+              "environmentVariables": [
+                {
+                  "name": "VSTS_ACCOUNT",
+                  "value": "associa"
+                },
+                {
+                  "name": "VSTS_TOKEN",
+                  "value": "[parameters('containerGroups_buildagent_token')]"
+                },
+                {
+                  "name": "VSTS_AGENT",
+                  "value": "[parameters('containerGroups_buildagent_name')]"
+                }
+              ],
+              "resources": {
+                "requests": {
+                  "memoryInGB": 6.5,
+                  "cpu": 2
+                }
+              }
+            }
+          }
+        ],
+        "restartPolicy": "OnFailure",
+        "osType": "Linux"
+      }
+    }
+  ]
+}
