@@ -4,7 +4,9 @@
   "parameters": {
     "buildagent_name": {
       "defaultValue": "<your agent name>",
-      "type": "string"
+      "type": "string",
+      "metadata": null,
+      "description": "The name of your agent"
     },
     "buildagent_token": {
       "defaultValue": "<your PAT token> ref: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops#permissions",
@@ -21,6 +23,18 @@
     "buildagent_memoryInGB": {
       "defaultValue": "6.5",
       "type": "string"
+    },
+    "buildagent_pool": {
+      "defaultValue": "Default",
+      "type": "string"
+    },
+    "buildagent_os": {
+      "defaultValue": "Linux",
+      "type": "string",
+      "allowedValues": [
+        "Linux",
+        "Windows"
+      ]
     }
   },
   "variables": {},
@@ -49,6 +63,10 @@
                 {
                   "name": "VSTS_AGENT",
                   "value": "[parameters('buildagent_name')]"
+                },
+                {
+                  "name": "VSTS_POOL",
+                  "value": "[parameters('buildagent_pool')]"
                 }
               ],
               "resources": {
@@ -61,7 +79,7 @@
           }
         ],
         "restartPolicy": "OnFailure",
-        "osType": "Linux"
+        "osType": "[parameters('buildagent_os')]"
       }
     }
   ]
