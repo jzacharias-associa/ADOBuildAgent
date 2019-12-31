@@ -5,8 +5,9 @@
     "buildagent_name": {
       "defaultValue": "<your agent name>",
       "type": "string",
-      "metadata": null,
-      "description": "The name of your agent"
+      "metadata": {
+        "description": "The name of your agent"
+      }
     },
     "buildagent_token": {
       "defaultValue": "<your PAT token> ref: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops#permissions",
