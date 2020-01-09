@@ -22,10 +22,6 @@
       "defaultValue": "6.5",
       "type": "string"
     },
-    "buildagent_pool": {
-      "defaultValue": "Default",
-      "type": "string"
-    },
     "buildagent_os": {
       "defaultValue": "Linux",
       "type": "string",
@@ -61,10 +57,6 @@
                 {
                   "name": "VSTS_AGENT",
                   "value": "[parameters('buildagent_name')]"
-                },
-                {
-                  "name": "VSTS_POOL",
-                  "value": "[parameters('buildagent_pool')]"
                 }
               ],
               "resources": {
